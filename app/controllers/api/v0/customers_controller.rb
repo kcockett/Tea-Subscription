@@ -1,5 +1,6 @@
 class Api::V0::CustomersController < ApplicationController
   def create
+    require 'pry'; binding.pry
     customer = Customer.new(customer_params)
 
     if customer.save

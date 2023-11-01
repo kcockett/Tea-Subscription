@@ -5,7 +5,9 @@ RSpec.describe 'POST /api/v0/customers', type: :request do
     it 'creates a new customer' do
       customer = FactoryBot.build(:customer)
       valid_params = { customer: { first_name: customer.first_name, last_name: customer.last_name, email: customer.email, address: customer.address } }
-      post '/api/v0/customers', params: valid_params
+      require 'pry'; binding.pry
+
+      post '/api/v0/customers', params: valid_params, headers: { 'Content-Type': 'application/json' }
 
       expect(response).to have_http_status(:created)
     end
