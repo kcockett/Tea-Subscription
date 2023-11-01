@@ -1,6 +1,6 @@
-include 'rails_helper'
+require 'rails_helper'
 
-Rspec.describe Customer, type: :model do
+RSpec.describe Customer, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:first_name) }
     it { should validate_presence_of(:last_name)}
