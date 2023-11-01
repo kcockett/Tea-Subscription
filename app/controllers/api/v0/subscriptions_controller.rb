@@ -1,4 +1,13 @@
 class Api::V0::SubscriptionsController < ApplicationController
+  def index
+    if customer = Customer.find(params[:customer_id])
+      subscriptions = customer.subscriptions
+      render json: subscriptions, status: :ok
+    else
+      # Future sad path logic, customer not found
+    end
+  end
+  
   def create
     subscription = Subscription.new(subscription_params)
 
