@@ -5,7 +5,7 @@ RSpec.describe 'POST /api/v0/subscriptions', type: :request do
     it 'creates a new subscription' do
       customer = create(:customer)
       tea_selection = Tea.all.first
-      valid_params = { subscription: { customer_id: customer.id, tea_id: tea_selection.id, status: "active", frequency: 1 } }
+      valid_params = { subscription: { title: "Monthly English Breakfast", price: 7.95, customer_id: customer.id, tea_id: tea_selection.id, status: "active", frequency_months: 1 } }
       post '/api/v0/subscriptions', params: valid_params
 
       expect(response).to have_http_status(:created)
