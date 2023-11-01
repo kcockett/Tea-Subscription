@@ -8,7 +8,7 @@ RSpec.describe 'Remove Subscription', type: :request do
       subscription = Subscription.create!(title: "Monthly English Breakfast", price: 7.95, customer_id: customer.id, tea_id: tea.id, status: "active", frequency_months: 1)
       valid_params = { subscription: { id: subscription.id }}
 
-      delete "/api/v0/subscriptions", params: valid_params
+      delete "/api/v0/subscriptions/#{subscription.id}", params: valid_params
 
       expect(response).to have_http_status(:ok)
     end
