@@ -22,3 +22,11 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+With these routes in place, you can create and delete subscriptions by making appropriate requests to the corresponding endpoints. Here's a brief summary of the available routes based on your configuration:
+
+To create a customer: POST /api/v0/customers?params
+To create a subscription for a customer: POST /api/v0/subscriptions?params
+To delete a subscription for a customer: DELETE /api/v0/subscriptions?params
+
+Without user accounts and authentication, these endpoints were created such that the customer email address is used for identification, as using an ID# would allow bad actors to scour the entire database.
