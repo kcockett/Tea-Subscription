@@ -14,7 +14,14 @@ RSpec.describe 'POST /api/v0/subscriptions', type: :request do
   
   describe 'handles subscription duplication' do
     it 'returns bad request when email is not unique' do
-      # Future sad path tests
+      customer = create(:customer)
+      tea_selection = Tea.all.first
+      subscription = Subscription.create!(title: "Monthly English Breakfast", price: 7.95, customer_id: customer.id, tea_id: tea_selection.id, status: "active", frequency_months: 1)
+
+      valid_params = { subscription: { title: "Monthly English Breakfast", price: 7.95, customer_id: customer.id, tea_id: tea_selection.id, status: "active", frequency_months: 1 } }
+      post "/api/v0/customers/#{customer.id}/subscriptions", params: valid_params
+
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
