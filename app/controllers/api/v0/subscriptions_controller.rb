@@ -9,13 +9,14 @@ class Api::V0::SubscriptionsController < ApplicationController
   end
   
   def create
-    customer = Customer.find(subscription_params[:customer_id])
-    tea = Tea.find(subscription_params[:tea_id])
-  
-    if customer.nil? || tea.nil?
+    if subscription_params[:customer_id].nil? || subscription_params[:tea_id].nil?
       render json: { error: 'Failed to create the subscription' }, status: :unprocessable_entity
       return
     end
+
+    customer = Customer.find(subscription_params[:customer_id])
+    tea = Tea.find(subscription_params[:tea_id])
+  
   
     found_subscription = Subscription.find_by(customer_id: subscription_params[:customer_id], tea_id: subscription_params[:tea_id])
   
