@@ -29,14 +29,11 @@ To create a customer: POST /api/v0/customers?params
 To create a subscription for a customer: POST /api/v0/subscriptions?params
 To delete a subscription for a customer: DELETE "/api/v0/subscriptions/[subscription_id]?customer_id=[customer_id]"
 
-Without user accounts and authentication, these endpoints were created such that the customer email address is used for identification, as using an ID# would allow bad actors to scour the entire database.
+
 
 schema, component tree, endpoints, screenshots or gifs of the UX/UI, etc.
 
-Expanded needs:
-Customer authentication/session control for account security
-Implement Cross-Origin Resource Sharing (CORS) to enhance security via access rights
-Administrative user to access/manage Customers, Subscriptions, Tea products, subscription options, email campaigns, and promotions
+
 
 Create API for adding a customer to the Customer database.  
 `post '/api/v0/customers'`
@@ -56,5 +53,34 @@ Required params as `JSON` in the `Body` of the request: `{ "subscription": { "st
 Create API to retrieve a list of all subscriptions for a given customer, both active and canceled.
 `get /api/v0/customers/[customer.id]/subscriptions`
 
-Add tests for data structure
+=================================
 
+#OVERVIEW:
+App for Tea subscription with several APIs:
+1. Get tea info
+2. Add customer
+3. Add subscription
+4. Cancel subscription
+5. Get customer subscriptions
+
+##Talking points:
+
+**Challenges:**
+
+1. Overthinking initial design concept:  What is a subscription?  One tea or curated collection? Blind Box?
+2. Overthinking security concerns:  Hide ID numbers, add user authentication, add API key, non-RESTful routes, GraphQL?
+3. Sourcing tea information:  Spoontacular API process, sort through documentation, Search external resources for Spoontacular integration, find different source that provides required information?
+
+**Future Development**
+
+1. Customer authentication/session control for account security
+2. Implement Cross-Origin Resource Sharing (CORS) to enhance security via access rights
+3. Administrative user to access/manage Customers, Subscriptions, Tea products, subscription options, email campaigns, and promotions
+4. Create User Stories for clarifying project requirements.  Collaborate with Project Managers and Front End developers for this information
+5. Add User Stories to Project Board to track ongoing development
+
+
+**To Do list:**
+
+1. Add tests for data structure
+2. Complete Readme details
