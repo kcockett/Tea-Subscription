@@ -28,7 +28,31 @@ RSpec.describe 'POST /api/v0/customers', type: :request do
       valid_params = { customer: { last_name: customer.last_name, email: customer.email, address: customer.address } }
       post '/api/v0/customers', params: valid_params
 
-      expect(response).to have_http_status(:bad_request)
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'returns bad request when missing last_name' do
+      customer = FactoryBot.build(:customer)
+      valid_params = { customer: { first_name: customer.first_name, email: customer.email, address: customer.address } }
+      post '/api/v0/customers', params: valid_params
+  
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+    
+    it 'returns bad request when missing email' do
+      customer = FactoryBot.build(:customer)
+      valid_params = { customer: { first_name: customer.first_name, last_name: customer.last_name, address: customer.address } }
+      post '/api/v0/customers', params: valid_params
+  
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+    
+    it 'returns bad request when missing address' do
+      customer = FactoryBot.build(:customer)
+      valid_params = { customer: { first_name: customer.first_name, last_name: customer.last_name, email: customer.email } }
+      post '/api/v0/customers', params: valid_params
+  
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 end
