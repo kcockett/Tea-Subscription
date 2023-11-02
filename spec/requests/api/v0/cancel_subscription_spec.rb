@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe 'Remove Subscription', type: :request do
+RSpec.describe 'Cancel Subscription', type: :request do
   describe 'with valid params' do
-    it 'removes a subscription' do
+    it 'cancels a subscription' do
       customer = create(:customer)
       tea = Tea.all.first
       subscription = Subscription.create!(title: "Monthly English Breakfast", price: 7.95, customer_id: customer.id, tea_id: tea.id, status: "active", frequency_months: 1)
-      valid_params = { subscription: { id: subscription.id, customer_email: customer.email}}
+      valid_params = { subscription: { status: "cancel"}}
 
-      delete "/api/v0/subscriptions/#{subscription.id}", params: valid_params
+      patch "/api/v0/customers/#{customer.id}/subscriptions/#{subscription.id}", params: valid_params
 
       expect(response).to have_http_status(:ok)
       

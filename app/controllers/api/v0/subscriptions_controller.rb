@@ -18,19 +18,23 @@ class Api::V0::SubscriptionsController < ApplicationController
     end
   end
 
-  def destroy
-    if subscription = Subscription.find(removal_params[:id])
-      if customer = Customer.find_by(email: removal_params[:customer_email])
-        if subscription.update(status: "cancelled")
-          render json: { message: 'Subscription successfully cancelled' }, status: :ok
+  def update
+    if removal_params[:status] == "cancel"
+      if subscription = Subscription.find(params[:id])
+        if customer = Customer.find(params[:customer_id])
+          if subscription.update(status: "cancelled")
+            render json: { message: 'Subscription successfully cancelled' }, status: :ok
+          else
+            # Future sad path logic... subscription cannot update: render json: { error: 'Failed to update the subscription status' }, status: :unprocessable_entity
+          end
         else
-          # Future sad path logic... render json: { error: 'Failed to update the subscription status' }, status: :unprocessable_entity
+          # Future sad path logic... customer not found: render json: { error: 'Cannot be processed' }, status: :422
         end
       else
-        # Future sad path logic... render json: { error: 'Cannot be processed' }, status: :422
+        # Future sad path logic... subscription not found: render json: { error: 'Cannot be processed' }, status: :422
       end
     else
-      # Future sad path logic
+      #Future option path, such as reactivating an cancelled subscription
     end
   end
 
@@ -41,6 +45,7 @@ class Api::V0::SubscriptionsController < ApplicationController
   end
 
   def removal_params
-    params.require(:subscription).permit(:id, :customer_email)
+    params.require(:subscription).permit(:status)
   end
+
 end
