@@ -10,6 +10,7 @@ class Api::V0::SubscriptionsController < ApplicationController
   end
   
   def create
+    require 'pry'; binding.pry
     if subscription_params[:customer_id].nil? || subscription_params[:tea_id].nil?
       render json: { error: 'Unable to process this request' }, status: :unprocessable_entity
       return
