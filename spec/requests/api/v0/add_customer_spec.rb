@@ -24,7 +24,11 @@ RSpec.describe 'POST /api/v0/customers', type: :request do
 
   describe 'with invalid params' do
     it 'returns bad request when missing first_name' do
-      # Future sad path tests
+      customer = FactoryBot.build(:customer)
+      valid_params = { customer: { last_name: customer.last_name, email: customer.email, address: customer.address } }
+      post '/api/v0/customers', params: valid_params
+
+      expect(response).to have_http_status(:bad_request)
     end
   end
 end
