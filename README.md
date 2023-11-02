@@ -37,3 +37,22 @@ Expanded needs:
 Customer authentication/session control for account security
 Implement Cross-Origin Resource Sharing (CORS) to enhance security via access rights
 Administrative user to access/manage Customers, Subscriptions, Tea products, subscription options, email campaigns, and promotions
+
+Create API for adding a customer to the Customer database.  
+`post '/api/v0/customers'`
+Valid params included in the `Body` of the request as `JSON` (all fields required, email must be unique):  `{ customer: { "first_name": "first_name, "last_name": "last_name", "email": "email", "address": "address" } }`
+
+Add dummy "Teas" data for Test and Dev environments.  All entries include `title`, `description`, `temperature`, and `brew_time`.
+
+Add an endpoint to create a Subscription.  
+`post /api/v0/customers/[customer_id]/subscriptions`
+Required parameters, as JSON in the Body of the request.  Example:  `{ "subscription": { "title": "Monthly English Breakfast", "price": 7.95, "customer_id": 3, "tea_id": 5, "status": "active", "frequency_months": 1 } }`
+Required information:  title(string), price(float), customer_id(integer), tea_id(integer), status(string), frequency_months(integer)
+
+Create an API for canceling a subscription:
+`patch /api/v0/customers/[customer_id]/subscriptions/[subscription_id]  `
+Required params as `JSON` in the `Body` of the request: `{ "subscription": { "status": "cancel"}}`
+
+Create API to retrieve a list of all subscriptions for a given customer, both active and canceled.
+`get /api/v0/customers/[customer.id]/subscriptions`
+

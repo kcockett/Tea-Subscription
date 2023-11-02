@@ -5,7 +5,7 @@ class Api::V0::CustomersController < ApplicationController
     if customer.save
       render json: customer, status: :created
     else
-      # Future sad path features
+      render json: customer.errors, status: :unprocessable_entity
     end
   end
 
