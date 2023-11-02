@@ -1,16 +1,17 @@
 class Api::V0::SubscriptionsController < ApplicationController
   def index
-    if customer = Customer.find(params[:customer_id])
+    customer = Customer.find_by(id: params[:customer_id])
+    if customer
       subscriptions = customer.subscriptions
       render json: subscriptions, status: :ok
     else
-      # Future sad path logic, customer not found
+      render json: { error: 'Unable to process this request' }, status: :unprocessable_entity
     end
   end
   
   def create
     if subscription_params[:customer_id].nil? || subscription_params[:tea_id].nil?
-      render json: { error: 'Failed to create the subscription' }, status: :unprocessable_entity
+      render json: { error: 'Unable to process this request' }, status: :unprocessable_entity
       return
     end
 
@@ -19,14 +20,14 @@ class Api::V0::SubscriptionsController < ApplicationController
     found_subscription = Subscription.find_by(customer_id: subscription_params[:customer_id], tea_id: subscription_params[:tea_id])
   
     if found_subscription
-      render json: { error: 'Failed to create the subscription' }, status: :unprocessable_entity
+      render json: { error: 'Unable to process this request' }, status: :unprocessable_entity
     else
       subscription = Subscription.new(subscription_params)
   
       if subscription.save
         render json: subscription, status: :created
       else
-        render json: { error: 'Failed to create the subscription' }, status: :unprocessable_entity
+        render json: { error: 'Unable to process this request' }, status: :unprocessable_entity
       end
     end
   end
@@ -41,10 +42,10 @@ class Api::V0::SubscriptionsController < ApplicationController
         subscription.update(status: "canceled")
         render json: { message: 'Subscription successfully canceled' }, status: :ok
       else
-        render json: { error: 'Invalid status provided' }, status: :unprocessable_entity
+        render json: { error: 'Unable to process this request' }, status: :unprocessable_entity
       end
     else
-      render json: { error: 'Invalid status provided' }, status: :unprocessable_entity
+      render json: { error: 'Unable to process this request' }, status: :unprocessable_entity
     end
   end
   

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'GET /api/v0/customers/:id/subscriptions', type: :request do
-  describe 'with valid customer email address' do
+  describe 'with valid customer id' do
     it 'returns a list of subscriptions' do
       customer = create(:customer)
       tea_1 = Tea.all.first
@@ -13,6 +13,13 @@ RSpec.describe 'GET /api/v0/customers/:id/subscriptions', type: :request do
       get "/api/v0/customers/#{customer.id}/subscriptions"
 
       expect(response).to have_http_status(:ok)
+    end
+  end
+  describe 'with invalid data' do
+    it 'returns an error with invalid customer id' do
+      get "/api/v0/customers/9999999999/subscriptions"
+
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 end
