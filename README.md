@@ -55,7 +55,7 @@ Create API to retrieve a list of all subscriptions for a given customer, both ac
 
 =================================
 
-#OVERVIEW:
+# OVERVIEW:
 App for Tea subscription with several APIs:
 1. Get tea info
 2. Add customer
@@ -63,13 +63,16 @@ App for Tea subscription with several APIs:
 4. Cancel subscription
 5. Get customer subscriptions
 
-##Talking points:
+## Talking points:
 
 **Challenges:**
 
 1. Overthinking initial design concept:  What is a subscription?  One tea or curated collection? Blind Box?
+> Single box which triggers every X months
 2. Overthinking security concerns:  Hide ID numbers, add user authentication, add API key, non-RESTful routes, GraphQL?
+> Keep RESTful for ease of future development, but use generic error responses
 3. Sourcing tea information:  Spoontacular API process, sort through documentation, Search external resources for Spoontacular integration, find different source that provides required information?
+> Created 10 sample products with all needed attributes as provided by AI response
 
 **Future Development**
 
