@@ -18,6 +18,15 @@ RSpec.describe 'Cancel Subscription', type: :request do
   end
 
   describe "without valid params" do
-    # Future sad path tests
+    it "returns an error if given an incorrect customer id" do
+      customer = create(:customer)
+      tea = Tea.all.first
+      subscription = Subscription.create!(title: "Monthly English Breakfast", price: 7.95, customer_id: customer.id, tea_id: tea.id, status: "active", frequency_months: 1)
+      valid_params = { subscription: { status: "cancel"}}
+
+      patch "/api/v0/customers/9999999999/subscriptions/#{subscription.id}", params: valid_params
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
   end
 end
