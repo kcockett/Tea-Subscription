@@ -16,8 +16,6 @@ class Api::V0::SubscriptionsController < ApplicationController
 
     customer = Customer.find(subscription_params[:customer_id])
     tea = Tea.find(subscription_params[:tea_id])
-  
-  
     found_subscription = Subscription.find_by(customer_id: subscription_params[:customer_id], tea_id: subscription_params[:tea_id])
   
     if found_subscription
@@ -35,24 +33,21 @@ class Api::V0::SubscriptionsController < ApplicationController
   
 
   def update
-    if removal_params[:status] == "cancel"
-      if subscription = Subscription.find(params[:id])
-        if customer = Customer.find(params[:customer_id])
-          if subscription.update(status: "cancelled")
-            render json: { message: 'Subscription successfully cancelled' }, status: :ok
-          else
-            # Future sad path logic... subscription cannot update: render json: { error: 'Failed to update the subscription status' }, status: :unprocessable_entity
-          end
-        else
-          # Future sad path logic... customer not found: render json: { error: 'Cannot be processed' }, status: :422
-        end
+    customer = Customer.find_by(id: params[:customer_id])
+    subscription = Subscription.find_by(id: params[:id])
+  
+    if customer && subscription
+      if removal_params[:status] == "cancel"
+        subscription.update(status: "canceled")
+        render json: { message: 'Subscription successfully canceled' }, status: :ok
       else
-        # Future sad path logic... subscription not found: render json: { error: 'Cannot be processed' }, status: :422
+        render json: { error: 'Invalid status provided' }, status: :unprocessable_entity
       end
     else
-      #Future option path, such as reactivating an cancelled subscription
+      render json: { error: 'Invalid status provided' }, status: :unprocessable_entity
     end
   end
+  
 
   private
 
