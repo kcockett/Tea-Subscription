@@ -9,14 +9,30 @@ class Api::V0::SubscriptionsController < ApplicationController
   end
   
   def create
-    subscription = Subscription.new(subscription_params)
+    if subscription_params[:customer_id].nil? || subscription_params[:tea_id].nil?
+      render json: { error: 'Failed to create the subscription' }, status: :unprocessable_entity
+      return
+    end
 
-    if subscription.save
-      render json: subscription, status: :created
+    customer = Customer.find(subscription_params[:customer_id])
+    tea = Tea.find(subscription_params[:tea_id])
+  
+  
+    found_subscription = Subscription.find_by(customer_id: subscription_params[:customer_id], tea_id: subscription_params[:tea_id])
+  
+    if found_subscription
+      render json: { error: 'Failed to create the subscription' }, status: :unprocessable_entity
     else
-      # Future sad path features
+      subscription = Subscription.new(subscription_params)
+  
+      if subscription.save
+        render json: subscription, status: :created
+      else
+        render json: { error: 'Failed to create the subscription' }, status: :unprocessable_entity
+      end
     end
   end
+  
 
   def update
     if removal_params[:status] == "cancel"
