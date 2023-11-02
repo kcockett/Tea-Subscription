@@ -56,3 +56,5 @@ Required params as `JSON` in the `Body` of the request: `{ "subscription": { "st
 Create API to retrieve a list of all subscriptions for a given customer, both active and canceled.
 `get /api/v0/customers/[customer.id]/subscriptions`
 
+Add tests for data structure
+
