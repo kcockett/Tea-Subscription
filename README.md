@@ -150,31 +150,3 @@ Expected response:
 
 ## Author
 Kaina Cockett [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white) ](https://github.com/kcockett) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white) ](https://www.linkedin.com/in/kcockett/)
-
-=================================
-
-
-
-## Talking points:
-
-**Challenges:**
-
-1. Overthinking initial design concept:  What is a subscription?  One tea or curated collection? Blind Box?
-> Single box which triggers every X months
-2. Overthinking security concerns:  Hide ID numbers, add user authentication, add API key, use non-RESTful routes, GraphQL?
-> Keep RESTful for ease of future development, but use generic error responses
-3. Sourcing tea information:  Spoontacular API process, sort through documentation, Search external resources for Spoontacular integration, find different source that provides required information?
-> Created 10 sample products with all needed attributes as provided by AI response
-
-**Future Development**
-
-1. Collaborate with Project Managers and Front End developers to clarify project requirements, create User Stories, develop JSON contracts.
-2. Discuss customer authentication/session control for account security
-3. Discuss Cross-Origin Resource Sharing (CORS) to enhance security via access rights
-4. Administrative user to access/manage Customers, Subscriptions, Tea products, subscription options, email campaigns, and promotions
-
-
-**To Do list:**
-
-1. Add tests for data structure once JSON contracts are completed
-2. Update Readme details as project evolves
